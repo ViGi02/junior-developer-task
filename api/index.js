@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(express.json()); // to parse JSON bodies
+app.use(express.json());
 
-// Root route to handle GET requests
 app.get('/', (req, res) => {
     res.send('Welcome to the Webhook API');
 });
@@ -16,7 +16,11 @@ app.post('/webhook', (req, res) => {
     }
 
     const sortedArray = data.split('').sort();
-    res.json({ word: sortedArray });
+    const word = sortedArray.join('');
+
+    res.json({ word });
 });
 
-module.exports = app;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
